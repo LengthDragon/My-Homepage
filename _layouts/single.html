@@ -21,7 +21,7 @@ layout: default
     {% if page.title %}<meta itemprop="headline" content="{{ page.title | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
     {% if page.excerpt %}<meta itemprop="description" content="{{ page.excerpt | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
     {% if page.date %}<meta itemprop="datePublished" content="{{ page.date | date: "%B %d, %Y" }}">{% endif %}
-    {% if page.modified %}<meta itemprop="dateModified" content="{{ page.modified | date: "%B %d, %Y" }}">{% endif %}
+    {% if page.modified %}<meta itemprop="dateModified" content="{{ page.modified | date: "%Y-%m-%d" }}">{% endif %}
 
     <div class="page__inner-wrap">
       {% unless page.header.overlay_color or page.header.overlay_image %}
@@ -35,7 +35,7 @@ layout: default
         {% endif %}
         
         {% if page.collection == 'teaching' %}
-          <p> {{ page.type }}, <i>{{ page.venue }}</i>, {{ page.date | default: "1900-01-01" | date: "%Y" }} </p>
+          <p>{{ page.type }}, <i>{{ page.venue }}</i>, {{ page.date | default: "1900-01-01" | date: "%Y" }} </p>
         {% elsif page.venue and page.date %}
           <p>Published in <i>{{ page.venue }}</i>, {{ page.date | default: "1900-01-01" | date: "%Y" }} </p>
         {% elsif page.date %}
@@ -67,7 +67,9 @@ layout: default
             {%- if page.bibtexurl -%}{% unless first %} | {% endunless %}<a href="{{ page.bibtexurl }}">Download Bibtex</a>{% assign first = false %}{%- endif -%}
             {%- if page.codeurl -%}{% unless first %} | {% endunless %}<a href="{{ page.codeurl }}" target="_blank" rel="noopener">Code (GitHub)</a>{% assign first = false %}{%- endif -%}
           </p>
-        {%- endif -%}
+        {%- endif %}
+
+        {% if page.code_status %}<p style="font-size: smaller"><strong>Code status:</strong> {{ page.code_status | markdownify | remove: "<p>" | remove: "</p>" }}</p>{% endif %}
 
         {% if page.link %}<div><a href="{{ page.link }}" class="btn">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
       </section>
